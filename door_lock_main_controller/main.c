@@ -81,9 +81,16 @@ void check_password(void)
 		{
 			UART_sendByte(FALSE);
 			trial++;
-			if(trial==3)
+			if(trial==2)
 				{
-					alarm_trigger();
+				volatile uint8 i=0;
+					while(i<10)
+					{
+						i++;
+						alarm_trigger();
+						_delay_ms(1000);
+					}
+					trial=0;
 				}
 			return;
 
@@ -114,11 +121,18 @@ void pass_change(void)
 		}
 		else
 		{
-			UART_sendByte(FALSE);
 			trial++;
-			if(trial==3)
-				{
-					alarm_trigger();
+			UART_sendByte(FALSE);
+			if(trial==2)
+			{
+				volatile uint8 i=0;
+					while(i<10)
+					{
+						i++;
+						alarm_trigger();
+						_delay_ms(1000);
+					}
+					trial=0;
 				}
 			return;
 

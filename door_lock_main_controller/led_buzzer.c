@@ -23,12 +23,8 @@ void alarm_init(void)
 
 void alarm_trigger(void)
 {
-	while(1)
-	{
 		DIO_BIT_TOGGLE(ALARM_PORT,ALARM_BUZZ);
 		DIO_BIT_TOGGLE(ALARM_PORT,ALARM_LED);
-		_delay_ms(1000);
-	}
 }
 
 

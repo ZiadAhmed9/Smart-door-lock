@@ -168,14 +168,19 @@ static void correct_password(void)
 static void incorrect_password(void)
 {
 	trials++;
-	if(trials==3)
+	if(trials==2)
 	{
-		while(1)
-		{
+		volatile uint8 i;
+
 			LCD_Clear();
-			LCD_displayString("DOOR LOCKED, PLEASE CALL SUPPORT!!");
-			_delay_ms(5000);
-		}
+			LCD_displayString("DOOR LOCKED!!");
+			trials=0;
+			while(i<10)
+			{
+				i++;
+				_delay_ms(1000);
+			}
+			return;
 	}
 	LCD_Clear();
 	LCD_displayString("INVALID PASSWORD");
@@ -206,12 +211,23 @@ void pass_change(void)
 		LCD_displayString("CORRECT!");
 		_delay_ms(1000);
 	}
-	else
+	else if(check_old==FALSE)
 	{
 		trials++;
+		if(trials==2)
+		{
+			volatile uint8 j;
+			LCD_Clear();
+			LCD_displayString("DOOR LOCKED!!");
+			_delay_ms(1000);
+			trials=0;
+		}
+		else
+		{
 		LCD_Clear();
 		LCD_displayString("WRONG PASSWORD");
 		_delay_ms(1000);
+		}
 		return;
 	}
 
